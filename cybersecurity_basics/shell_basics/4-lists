@@ -1,0 +1,12 @@
+#!/bin/bash
+echo ".:
+"
+ls -la
+echo "
+..:
+"
+ls -la ..
+echo "
+/boot:
+"
+ls -la /boot

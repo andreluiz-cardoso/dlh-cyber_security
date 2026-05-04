@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Init script: start, stop, restat the manage_my_process daemon
-PIDFILE="/var/run/my_process.pid"
+PIDFILE="/tmp/my_process.pid"
 SCRIPT="./manage_my_process"
 
 if [ "$1" = "start" ]; then

@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# Print message every 2 seconds forever
 while true; do
 	echo "To infinity and beyond"
 	sleep 2

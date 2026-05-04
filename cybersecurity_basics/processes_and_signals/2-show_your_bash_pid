@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
-ps aux | grep bash | grep -V grep
+# Shows lines containing 'bash' to find Bash PID
 # shellcheck disable=SC2009
+ps aux | grep bash

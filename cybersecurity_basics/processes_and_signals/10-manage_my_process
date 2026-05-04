@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Init script: start, stop, restat the manage_my_process daemon
-PIDFILE="/tmp/my_process.pid"
+PIDFILE="/var/run/my_process.pid"
 SCRIPT="./manage_my_process"
 
 start()  {
@@ -25,8 +25,9 @@ stop() {
 
 restart() {
 
-	stop
-	start
+	stop > /dev/null 2>&1
+	start > /dev/null 2&1
+	echo "manage_my_process restarted"
 }
 
 case "$1" in

@@ -1,2 +1,2 @@
 #!/bin/bash
-john --wordlist=/usr/share/wordlist/rockyou.txt "$1"
+john --wordlists=/usr/share/wordlists/rockyou.txt "$1"

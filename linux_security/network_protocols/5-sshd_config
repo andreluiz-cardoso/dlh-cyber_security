@@ -1,5 +1,5 @@
 Protocol 2
-PermitRootLogin 
+PermitRootLogin no 
 PasswordAuthentication no
 PermitEmptyPasswords no
 PubkeyAuthentication yes

@@ -1,0 +1,11 @@
+Protocol 2
+PermitRootLogin no
+PasswordAuthentication on
+PermitEmptyPassword no
+PubkeyAuthentication yes
+X11Forwarding no
+Port 22
+MaxAuthTries 3
+ChallengeResponseAuthentication no
+UsePAM yes
+PrintMotd no

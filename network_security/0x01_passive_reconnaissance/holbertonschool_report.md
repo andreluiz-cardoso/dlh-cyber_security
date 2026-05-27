@@ -1,84 +1,61 @@
 # Passive Reconnaissance Report - holbertonschool.com
 
 **Date:** May 27, 2026  
-**Tools used:** Shodan.io, DNS enumeration (dig, nslookup, subfinder)
+**Target:** holbertonschool.com  
+**Methodology:** Passive reconnaissance using Shodan.io
 
-## 1. IP Ranges and Hosts Discovered
+## Executive Summary
 
-Using Shodan searches with the operator `hostname:holbertonschool.com` and DNS records:
+During passive reconnaissance of the domain holbertonschool.com, several active subdomains were identified through Shodan. All discovered assets are hosted on Amazon AWS infrastructure in the eu-west-3 region (Paris, France). The main domain redirects to hbtn.dev. One of the key hosts identified is `web-0-31-172.cod-eu-west-3.hbtn.io` resolving to IP **10.42.31.172**.
 
-- **Main IP Addresses:**
-  - 75.2.70.75
-  - 99.83.190.102
+## Discovered Subdomains
 
-- **Organization:** Amazon.com, Inc. (AWS Global Accelerator)
-- **ASN:** AS16509
-- **Location:** United States / Seattle
-- **Network Technology:** AWS Global Accelerator + CloudFront CDN
+The following subdomains were found using Shodan queries (ssl:"holbertonschool.com"):
 
-**Note:** All subdomains resolve to these two IP addresses. Shodan shows limited additional hosts because the domain is protected behind AWS infrastructure.
-
-## 2. Subdomains Discovered
-
-Full list of subdomains found via Subfinder (saved in `holbertonschool.com.txt`):
-
-- www.holbertonschool.com
 - apply.holbertonschool.com
-- blog.holbertonschool.com
-- support.holbertonschool.com
-- fr.holbertonschool.com
-- assets.holbertonschool.com
-- webflow.holbertonschool.com
-- v1.holbertonschool.com, v2.holbertonschool.com, v3.holbertonschool.com
-- staging-*.holbertonschool.com (multiple staging environments)
-- beta.holbertonschool.com, alpha.holbertonschool.com
-- rails-assets.holbertonschool.com
-- help.holbertonschool.com
-- and 15+ additional subdomains
+- read.holbertonschool.com
+- yriry2.holbertonschool.com
 
-All subdomains point to the same two AWS IP addresses.
+## IP Addresses and Infrastructure
 
-## 3. Technologies and Frameworks Detected
+| Subdomain                        | IP Address      | Reverse DNS |
+|----------------------------------|-----------------|-------------|
+| apply.holbertonschool.com       | 13.38.201.141   | ec2-13-38-201-141.eu-west-3.compute.amazonaws.com |
+| read.holbertonschool.com        | 35.181.124.46   | ec2-35-181-124-46.eu-west-3.compute.amazonaws.com |
+| yriry2.holbertonschool.com      | 52.47.143.83    | ec2-52-47-143-83.eu-west-3.compute.amazonaws.com |
+| web-0-31-172.cod-eu-west-3.hbtn.io | **10.42.31.172** | - |
 
-**Web Server / Proxy:**
-- Nginx (detected via Shodan on both IPs)
+All IPs belong to **Amazon AWS eu-west-3 (Paris)**.  
+Main IP ranges containing these hosts:
+- 13.38.0.0/15
+- 35.180.0.0/14
+- 52.47.0.0/16
 
-**Cloud / Infrastructure:**
-- Amazon Web Services (AWS)
-- AWS Global Accelerator
-- CloudFront (CDN)
+## Technologies and Frameworks Detected
 
-**Confirmed via DNS TXT Records:**
-- Google Workspace (SPF + MX)
-- Microsoft 365 (`MS=BB8A869E...`)
-- Apple domain verification
-- Dropbox domain verification
-- Zendesk
-- Mailgun
-- Intacct
-- Loader.io (load testing)
+- **Web Server:** nginx 1.20.0
+- **Hosting:** Amazon EC2 (eu-west-3)
+- **SSL/TLS:** TLSv1.2 with Let's Encrypt and Amazon RSA 2048 certificates
+- **Security Headers:** X-Frame-Options, X-XSS-Protection, X-Content-Type-Options
 
-**Frameworks / Platforms:**
-- Webflow (multiple subdomains)
-- Ruby on Rails (`rails-assets.holbertonschool.com`)
-- Discourse (forum platform)
-- Google services (site verification)
+## HTTP Response Analysis
 
-**Open Ports (Shodan):**
-- Port 80 (HTTP) → Nginx + redirect to HTTPS
-- Port 443 (HTTPS) → Protected by CloudFront
+- `apply.holbertonschool.com` → HTTP 200 (publicly accessible)
+- `read.holbertonschool.com` → HTTP 401 Unauthorized (requires authentication)
 
-## 4. Conclusions and Security Observations
+## Observations and Recommendations
 
-- The domain uses highly optimized AWS infrastructure (Global Accelerator + CDN), making full mapping difficult.
-- Multiple public staging and development subdomains increase the attack surface.
-- Heavy use of third-party services (Google, Microsoft, Zendesk, etc.).
-- Recommendation: Monitor staging subdomains and apply strict hardening on Nginx/CloudFront.
+- The entire infrastructure is located in the Paris AWS region, consistent with Holberton School's presence in France.
+- nginx 1.20.0 is used across the discovered hosts.
+- Basic security headers are implemented, which is a good practice.
+- Some subdomains (such as read.holbertonschool.com) are properly protected with authentication.
+- No exposed outdated TLS versions were detected.
 
-**Sources:**
-- Shodan.io (hostname and IP searches)
-- DNS enumeration (dig, nslookup, subfinder)
-- Public records (WHOIS, DNS TXT/MX/NS)
+## Tools Used
+
+- Shodan.io (main reconnaissance tool)
+- SSL certificate search
+- Reverse DNS lookup
 
 ---
 **End of Report**

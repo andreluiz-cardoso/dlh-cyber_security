@@ -1,1 +1,1 @@
-{"domain": "malicious-site.com", "ip": "192.0.2.100"}
+8a226a02d2f27ba6fb04abe4158897ef
